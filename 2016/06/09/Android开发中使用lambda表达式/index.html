@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;
-在Module的build.gradle中添加：1apply plugin: &apos;me.tatarka.retrolambda&apos;
-并把jdk设置成1.8的：123456androi">
+<meta name="description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android开发中使用lambda表达式">
 <meta property="og:url" content="http://zpayh.xyz/2016/06/09/Android开发中使用lambda表达式/index.html">
 <meta property="og:site_name" content="Android">
-<meta property="og:description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;
-在Module的build.gradle中添加：1apply plugin: &apos;me.tatarka.retrolambda&apos;
-并把jdk设置成1.8的：123456androi">
-<meta property="og:updated_time" content="2016-06-09T04:12:38.992Z">
+<meta property="og:description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;">
+<meta property="og:updated_time" content="2016-07-06T17:03:16.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android开发中使用lambda表达式">
-<meta name="twitter:description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;
-在Module的build.gradle中添加：1apply plugin: &apos;me.tatarka.retrolambda&apos;
-并把jdk设置成1.8的：123456androi">
+<meta name="twitter:description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;">
 
 
 
@@ -300,6 +294,7 @@
 
       
         <p>在<strong>Project</strong>的<strong>build.gradle</strong>中添加：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">       <span class="keyword">classpath</span> <span class="string">'me.tatarka:gradle-retrolambda:3.2.5'</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>在<strong>Module</strong>的<strong>build.gradle</strong>中添加：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'me.tatarka.retrolambda'</span></span><br></pre></td></tr></table></figure></p>
 <p>并把jdk设置成1.8的：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</span><br><span class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>build</strong>更新一下,就可以在代码中使用 <strong>lambda</strong>语句了。</p>
@@ -324,7 +319,27 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/07/Dagger2使用详解/" rel="prev" title="Dagger2使用详解">
+                Dagger2使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -393,13 +408,20 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
