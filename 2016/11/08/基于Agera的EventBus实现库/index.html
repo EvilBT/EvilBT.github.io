@@ -1,0 +1,629 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,Agera,EventBus," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="基于Agera的EventBus实现库AgeraBus简介AgeraBus 是基于谷歌开源的Agera实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Agera的EventBus实现库">
+<meta property="og:url" content="http://zpayh.xyz/2016/11/08/基于Agera的EventBus实现库/index.html">
+<meta property="og:site_name" content="Android">
+<meta property="og:description" content="基于Agera的EventBus实现库AgeraBus简介AgeraBus 是基于谷歌开源的Agera实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。">
+<meta property="og:updated_time" content="2016-11-08T14:00:59.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Agera的EventBus实现库">
+<meta name="twitter:description" content="基于Agera的EventBus实现库AgeraBus简介AgeraBus 是基于谷歌开源的Agera实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '作者'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://zpayh.xyz/2016/11/08/基于Agera的EventBus实现库/"/>
+
+  <title> 基于Agera的EventBus实现库 | Android </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?050fb5049d2a5d9758d4764b5482ceea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Android</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                基于Agera的EventBus实现库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-08T21:59:54+08:00" content="2016-11-08">
+              2016-11-08
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/08/基于Agera的EventBus实现库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/08/基于Agera的EventBus实现库/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="基于Agera的EventBus实现库"><a href="#基于Agera的EventBus实现库" class="headerlink" title="基于Agera的EventBus实现库"></a>基于Agera的EventBus实现库</h1><h2 id="AgeraBus简介"><a href="#AgeraBus简介" class="headerlink" title="AgeraBus简介"></a>AgeraBus简介</h2><p><a href="https://github.com/EvilBT/AgeraBus" target="_blank" rel="external">AgeraBus</a> 是基于谷歌开源的<a href="https://github.com/google/agera" target="_blank" rel="external">Agera</a>实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。<br><a id="more"></a></p>
+<h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>在项目根目录的build.gradle中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">	repositories &#123;</span><br><span class="line">		...</span><br><span class="line">		maven &#123; url &quot;https://jitpack.io&quot; &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在app的build.gradle中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile &apos;com.github.EvilBT:AgeraBus:v1.0.1&apos;</span><br><span class="line">    compile &apos;com.google.android.agera:agera:1.2.0-beta3&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>一个事件总线的使用总是少不了订阅、取消、发送事件，还有获取数据，下面我们来看下AgeraBus的基本用法，首先我们定义一个普通的类充当一个事件类型:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String mName;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.mName = name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.mName = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.mName;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>简单的订阅，注销事件以及获取最新数据：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">Updatable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onStart();</span><br><span class="line">        <span class="comment">//register 同一个Updatable实例只能订阅同一种事件类型一次，如需重新</span></span><br><span class="line">		<span class="comment">//订阅，要先取消订阅，如果多次订阅会抛出异常，这里Activity实现了Updatable接口</span></span><br><span class="line">        AgeraBus.getDefault()</span><br><span class="line">                .addUpdatable(<span class="keyword">this</span>,User.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onStop();</span><br><span class="line">        <span class="comment">// unregister 取消订阅时，这个Updatable实例必须已经订阅了此事件，</span></span><br><span class="line">		<span class="comment">// 如果取消没有订阅的Updatable，会抛出异常</span></span><br><span class="line">        AgeraBus.getDefault()</span><br><span class="line">                .removeUpdatable(<span class="keyword">this</span>,User.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 接收到事件时调用的接口</span><br><span class="line">     * </span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// accept</span></span><br><span class="line">          AgeraBus.getDefault()<span class="comment">//获取默认总线</span></span><br><span class="line">                .getSupplier(User.class)<span class="comment">//拿到数据提供者</span></span><br><span class="line">                .get()<span class="comment">//获取封装好的数据Result&lt;User&gt;</span></span><br><span class="line">                .ifSucceededSendTo(<span class="keyword">new</span> Receiver&lt;User&gt;() &#123;<span class="comment">//数据成功接收到就发送给接收者</span></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull User value)</span> </span>&#123;</span><br><span class="line">                        <span class="comment">//打印吐司</span></span><br><span class="line">                        Toast.makeText(BaseActivity.<span class="keyword">this</span>, value.getName(), Toast.LENGTH_SHORT).show();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面就是最基本的订阅、取消事件以及接收数据。至于发送事件的话，只有一个入口:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AgeraBus.getDefault().post(<span class="keyword">new</span> User(<span class="string">"Sherlock"</span>));</span><br></pre></td></tr></table></figure></p>
+<p>上面就是AgeraBus最基本的用法，下面简单讲解一下，</p>
+<blockquote>
+<p>Agera 使用 <em>push event, pull data</em> 模型(推送事件,拉取数据)。 push event：被观察者只做事件通知，不携带任何数据; pull data：观察者根据自己需要从数据仓库(Repository.get())拉取数据。</p>
+</blockquote>
+<p>由于<em>push event, pull data</em>模型是数据和事件通知分离的，所以上面看到的Updatable接口设计上并没有携带数据过来的，我们在update方法里，如果要拉取数据，可以从AgeraBus拿到订阅事件的数据提供者:<br><em>Supplier</em>,再从Supplier中获取数据。</p>
+<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><p>EventBus 提供了线程分发，订阅优先级，取消事件分发，粘性事件，而这些在AgeraBus也都一一实现了。<br>使用这些高级功能时，我们的订阅方法是使用另外一个接口。下面会介绍到。</p>
+<h3 id="线程分发与线程模型"><a href="#线程分发与线程模型" class="headerlink" title="线程分发与线程模型"></a><strong>线程分发与线程模型</strong></h3><p>ThreadMode有四种：<br>PostThread，MainThread，BackgroundThread，Async.</p>
+<ul>
+<li><strong>PostThread</strong> 订阅者将会被调用在与发布线程同样的线程中。上面基本用法就是采取这样的线程分发的，不涉及线程切换，通常是四种模式开销最小的一个。对于简单任务来说这是推荐用法，但使用这个分发模型要小心不要在主线程执行耗时长的任务，避免阻塞主线程。</li>
+<li><strong>MainThread</strong> 订阅者将会被回调在Android的Main线程中，适用于更新UI而又不无法确定事件来源于哪个线程的情况。</li>
+<li><strong>BackgroundThread</strong> 订阅者将在后台线程被回调，如果发布线程本身不是主线程，那么行为就跟<strong>PostThread</strong>一致，如果是在主线程发布事件，会切换到后台线程执行。</li>
+<li><strong>Async</strong> 订阅者总是在一个单独的线程被回调。<h3 id="订阅优先级"><a href="#订阅优先级" class="headerlink" title="订阅优先级"></a><strong>订阅优先级</strong></h3>你可以在注册订阅者的时候设置优先级改变事件分发的顺序，按优先级从高到低分发事件回调。<h3 id="取消事件分发"><a href="#取消事件分发" class="headerlink" title="取消事件分发"></a><strong>取消事件分发</strong></h3>你可以在接收事件，拿到数据value之后中断之后的事件分发:<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AgeraBus.getDefault().cancel(value);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>value</code> 是从<em>Supplier</em>拿到的事件的数据，在update中调用上面的取消分发，后续的订阅者将不会接收到此次事件。</p>
+<h3 id="粘性事件"><a href="#粘性事件" class="headerlink" title="粘性事件"></a><strong>粘性事件</strong></h3><p>Agera 的 <em>push event, pull data</em>模型天然就是支持粘性事件，它总会保存最近（最新）的值，这样订阅粘性事件总是可以拿到最近（如果有）的数据。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a><strong>使用方法</strong></h3><p>要使用上面这些高级功能，我们用AgeraBus另外一个接口方法订阅事件：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AgeraBus.getDefault()</span><br><span class="line">              .compiler(User.class)<span class="comment">//设置订阅事件的类型</span></span><br><span class="line">              .priority(priority)<span class="comment">//设置优先级，或者调用.noPriority()不设置优先级(即为默认0优先级）</span></span><br><span class="line">              .sticky()<span class="comment">//设置为接收粘性事件，或者调用.noSticky()设置为不接收粘性事件(默认不接收粘性事件)</span></span><br><span class="line">              .background()<span class="comment">//设置分发线程，有background(),main(),posting(),async()对应四个分发模式(默认为posting模式)</span></span><br><span class="line">              .compile(updatable);<span class="comment">//设置订阅者，完成订阅</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>订阅事件不要中断链式调用，最后一定要调用compile(Updatable)完成调用</strong></p>
+<p>基本用法中的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AgeraBus.getDefault()</span><br><span class="line">               .addUpdatable(<span class="keyword">this</span>,User.class);</span><br></pre></td></tr></table></figure></p>
+<p>就是全部设置了默认的方式(0优先级，不接收粘性事件，posting线程分发)。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>在不同线程分发时候拿到的数据，不一定是引发这次事件的数据，拿到的数据有可能要比引发事件的数据要新，在<a href="https://github.com/captain-miao/AndroidAgeraTutorial/wiki/Reactive-programming#push-event-pull-data" target="_blank" rel="external">Agera Wiki 中文版</a>中有说到，这是因为:</p>
+<blockquote>
+<p>由于 <em>push event, pull data</em> 模型和多线程情况下，观察者可能看不到数据全部的更新记录。 这是特意设计的: 因为大多数情况下(尤其更新app UI), 本来就只需要关心最新的数据。</p>
+</blockquote>
+<p>上面的使用方法可以参考我的这个项目地址 <a href="https://github.com/EvilBT/AgeraBus" target="_blank" rel="external">AgeraBus</a>,里面有使用Demo。可以看下AgeraBus的具体实现，由于本人技术水平有限，如有Bug，欢迎讨论。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="http://zjutkz.net/2016/04/23/%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AA%E6%9C%89%E5%86%92%E9%99%A9%E7%B2%BE%E7%A5%9E%E7%9A%84%E4%BA%BA%EF%BC%81%E5%BC%80%E5%90%AF%E6%BC%AB%E6%BC%AB%E7%9A%84agera%E4%B9%8B%E6%97%85/" target="_blank" rel="external">zjutkz的要做一个有冒险精神的人！开启漫漫的agera之旅</a></p>
+<p><a href="https://github.com/captain-miao/AndroidAgeraTutorial/wiki" target="_blank" rel="external">Agera Wiki 中文版</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/Agera/" rel="tag">#Agera</a>
+          
+            <a href="/tags/EventBus/" rel="tag">#EventBus</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/07/Dagger2使用详解/" rel="next" title="Dagger2使用详解">
+                <i class="fa fa-chevron-left"></i> Dagger2使用详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/08/基于Agera的EventBus实现库/"
+           data-title="基于Agera的EventBus实现库" data-url="http://zpayh.xyz/2016/11/08/基于Agera的EventBus实现库/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/autor.jpg"
+               alt="sherlock" />
+          <p class="site-author-name" itemprop="name">sherlock</p>
+          <p class="site-description motion-element" itemprop="description">加油 努力</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于Agera的EventBus实现库"><span class="nav-number">1.</span> <span class="nav-text">基于Agera的EventBus实现库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AgeraBus简介"><span class="nav-number">1.1.</span> <span class="nav-text">AgeraBus简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加依赖"><span class="nav-number">1.2.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本用法"><span class="nav-number">1.3.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶用法"><span class="nav-number">1.4.</span> <span class="nav-text">进阶用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线程分发与线程模型"><span class="nav-number">1.4.1.</span> <span class="nav-text">线程分发与线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅优先级"><span class="nav-number">1.4.2.</span> <span class="nav-text">订阅优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消事件分发"><span class="nav-number">1.4.3.</span> <span class="nav-text">取消事件分发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#粘性事件"><span class="nav-number">1.4.4.</span> <span class="nav-text">粘性事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">1.4.5.</span> <span class="nav-text">使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">1.5.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">1.6.</span> <span class="nav-text">参考文章</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sherlock</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zpayh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
