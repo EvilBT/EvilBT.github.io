@@ -1,359 +1,62 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-  <meta name="google-site-verification" content="Sql7G8CBDDUA6MI5Sf6f8oLIwUh453ZsVUddRNyMUXk" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
   
     
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Android,Dagger2," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
-
-
-
-
-
-
-<meta name="description" content="Dagger2 使用详解 前言Dagger2 是一款使用在Java和Android上的依赖注入的一个类库。">
-<meta name="keywords" content="Android,Dagger2">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Dagger2使用详解">
-<meta property="og:url" content="http://zpayh.xyz/2016/07/07/Dagger2使用详解/index.html">
-<meta property="og:site_name" content="Android">
-<meta property="og:description" content="Dagger2 使用详解 前言Dagger2 是一款使用在Java和Android上的依赖注入的一个类库。">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/001.png?imageMogr2/auto-orient/thumbnail/500x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/002.png?imageMogr2/auto-orient/thumbnail/500x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/003.png?imageMogr2/auto-orient/thumbnail/500x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/006.png?imageMogr2/auto-orient/thumbnail/400x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/007.png?imageMogr2/auto-orient/thumbnail/400x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/004.png?imageMogr2/auto-orient/thumbnail/400x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/005.png?imageMogr2/auto-orient/thumbnail/400x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/008.png?imageMogr2/auto-orient/thumbnail/500x">
-<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/009.png?imageMogr2/auto-orient/thumbnail/500x">
-<meta property="og:updated_time" content="2016-07-06T17:03:15.292Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dagger2使用详解">
-<meta name="twitter:description" content="Dagger2 使用详解 前言Dagger2 是一款使用在Java和Android上的依赖注入的一个类库。">
-<meta name="twitter:image" content="http://o9qzkbu2x.bkt.clouddn.com/001.png?imageMogr2/auto-orient/thumbnail/500x">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://zpayh.xyz/2016/07/07/Dagger2使用详解/"/>
-
-
-
-
-
-  <title> Dagger2使用详解 | Android </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-97205771-1', 'auto');
-  ga('send', 'pageview');
-</script>
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Android</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
+    <entry>
+      <title><![CDATA[基于Agera的EventBus实现库]]></title>
+      <url>/2016/11/08/%E5%9F%BA%E4%BA%8EAgera%E7%9A%84EventBus%E5%AE%9E%E7%8E%B0%E5%BA%93/</url>
+      <content type="html"><![CDATA[<h1 id="基于Agera的EventBus实现库"><a href="#基于Agera的EventBus实现库" class="headerlink" title="基于Agera的EventBus实现库"></a>基于Agera的EventBus实现库</h1><h2 id="AgeraBus简介"><a href="#AgeraBus简介" class="headerlink" title="AgeraBus简介"></a>AgeraBus简介</h2><p><a href="https://github.com/EvilBT/AgeraBus" target="_blank" rel="external">AgeraBus</a> 是基于谷歌开源的<a href="https://github.com/google/agera" target="_blank" rel="external">Agera</a>实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。<br><a id="more"></a></p>
+<h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>在项目根目录的build.gradle中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">allprojects &#123;</div><div class="line">	repositories &#123;</div><div class="line">		...</div><div class="line">		maven &#123; url &quot;https://jitpack.io&quot; &#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在app的build.gradle中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile &apos;com.github.EvilBT:AgeraBus:v1.0.1&apos;</div><div class="line">    compile &apos;com.google.android.agera:agera:1.2.0-beta3&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>一个事件总线的使用总是少不了订阅、取消、发送事件，还有获取数据，下面我们来看下AgeraBus的基本用法，首先我们定义一个普通的类充当一个事件类型:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> String mName;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.mName = name;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.mName = name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.mName;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>简单的订阅，注销事件以及获取最新数据：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">Updatable</span></span>&#123;</div><div class="line"></div><div class="line">	...</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStart();</div><div class="line">        <span class="comment">//register 同一个Updatable实例只能订阅同一种事件类型一次，如需重新</span></div><div class="line">		<span class="comment">//订阅，要先取消订阅，如果多次订阅会抛出异常，这里Activity实现了Updatable接口</span></div><div class="line">        AgeraBus.getDefault()</div><div class="line">                .addUpdatable(<span class="keyword">this</span>,User.class);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStop();</div><div class="line">        <span class="comment">// unregister 取消订阅时，这个Updatable实例必须已经订阅了此事件，</span></div><div class="line">		<span class="comment">// 如果取消没有订阅的Updatable，会抛出异常</span></div><div class="line">        AgeraBus.getDefault()</div><div class="line">                .removeUpdatable(<span class="keyword">this</span>,User.class);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 接收到事件时调用的接口</div><div class="line">     * </div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// accept</span></div><div class="line">          AgeraBus.getDefault()<span class="comment">//获取默认总线</span></div><div class="line">                .getSupplier(User.class)<span class="comment">//拿到数据提供者</span></div><div class="line">                .get()<span class="comment">//获取封装好的数据Result&lt;User&gt;</span></div><div class="line">                .ifSucceededSendTo(<span class="keyword">new</span> Receiver&lt;User&gt;() &#123;<span class="comment">//数据成功接收到就发送给接收者</span></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull User value)</span> </span>&#123;</div><div class="line">                        <span class="comment">//打印吐司</span></div><div class="line">                        Toast.makeText(BaseActivity.<span class="keyword">this</span>, value.getName(), Toast.LENGTH_SHORT).show();</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面就是最基本的订阅、取消事件以及接收数据。至于发送事件的话，只有一个入口:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AgeraBus.getDefault().post(<span class="keyword">new</span> User(<span class="string">"Sherlock"</span>));</div></pre></td></tr></table></figure></p>
+<p>上面就是AgeraBus最基本的用法，下面简单讲解一下，</p>
+<blockquote>
+<p>Agera 使用 <em>push event, pull data</em> 模型(推送事件,拉取数据)。 push event：被观察者只做事件通知，不携带任何数据; pull data：观察者根据自己需要从数据仓库(Repository.get())拉取数据。</p>
+</blockquote>
+<p>由于<em>push event, pull data</em>模型是数据和事件通知分离的，所以上面看到的Updatable接口设计上并没有携带数据过来的，我们在update方法里，如果要拉取数据，可以从AgeraBus拿到订阅事件的数据提供者:<br><em>Supplier</em>,再从Supplier中获取数据。</p>
+<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><p>EventBus 提供了线程分发，订阅优先级，取消事件分发，粘性事件，而这些在AgeraBus也都一一实现了。<br>使用这些高级功能时，我们的订阅方法是使用另外一个接口。下面会介绍到。</p>
+<h3 id="线程分发与线程模型"><a href="#线程分发与线程模型" class="headerlink" title="线程分发与线程模型"></a><strong>线程分发与线程模型</strong></h3><p>ThreadMode有四种：<br>PostThread，MainThread，BackgroundThread，Async.</p>
+<ul>
+<li><strong>PostThread</strong> 订阅者将会被调用在与发布线程同样的线程中。上面基本用法就是采取这样的线程分发的，不涉及线程切换，通常是四种模式开销最小的一个。对于简单任务来说这是推荐用法，但使用这个分发模型要小心不要在主线程执行耗时长的任务，避免阻塞主线程。</li>
+<li><strong>MainThread</strong> 订阅者将会被回调在Android的Main线程中，适用于更新UI而又不无法确定事件来源于哪个线程的情况。</li>
+<li><strong>BackgroundThread</strong> 订阅者将在后台线程被回调，如果发布线程本身不是主线程，那么行为就跟<strong>PostThread</strong>一致，如果是在主线程发布事件，会切换到后台线程执行。</li>
+<li><strong>Async</strong> 订阅者总是在一个单独的线程被回调。<h3 id="订阅优先级"><a href="#订阅优先级" class="headerlink" title="订阅优先级"></a><strong>订阅优先级</strong></h3>你可以在注册订阅者的时候设置优先级改变事件分发的顺序，按优先级从高到低分发事件回调。<h3 id="取消事件分发"><a href="#取消事件分发" class="headerlink" title="取消事件分发"></a><strong>取消事件分发</strong></h3>你可以在接收事件，拿到数据value之后中断之后的事件分发:<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AgeraBus.getDefault().cancel(value);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>value</code> 是从<em>Supplier</em>拿到的事件的数据，在update中调用上面的取消分发，后续的订阅者将不会接收到此次事件。</p>
+<h3 id="粘性事件"><a href="#粘性事件" class="headerlink" title="粘性事件"></a><strong>粘性事件</strong></h3><p>Agera 的 <em>push event, pull data</em>模型天然就是支持粘性事件，它总会保存最近（最新）的值，这样订阅粘性事件总是可以拿到最近（如果有）的数据。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a><strong>使用方法</strong></h3><p>要使用上面这些高级功能，我们用AgeraBus另外一个接口方法订阅事件：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">AgeraBus.getDefault()</div><div class="line">              .compiler(User.class)<span class="comment">//设置订阅事件的类型</span></div><div class="line">              .priority(priority)<span class="comment">//设置优先级，或者调用.noPriority()不设置优先级(即为默认0优先级）</span></div><div class="line">              .sticky()<span class="comment">//设置为接收粘性事件，或者调用.noSticky()设置为不接收粘性事件(默认不接收粘性事件)</span></div><div class="line">              .background()<span class="comment">//设置分发线程，有background(),main(),posting(),async()对应四个分发模式(默认为posting模式)</span></div><div class="line">              .compile(updatable);<span class="comment">//设置订阅者，完成订阅</span></div></pre></td></tr></table></figure></p>
+<p><strong>订阅事件不要中断链式调用，最后一定要调用compile(Updatable)完成调用</strong></p>
+<p>基本用法中的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AgeraBus.getDefault()</div><div class="line">               .addUpdatable(<span class="keyword">this</span>,User.class);</div></pre></td></tr></table></figure></p>
+<p>就是全部设置了默认的方式(0优先级，不接收粘性事件，posting线程分发)。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>在不同线程分发时候拿到的数据，不一定是引发这次事件的数据，拿到的数据有可能要比引发事件的数据要新，在<a href="https://github.com/captain-miao/AndroidAgeraTutorial/wiki/Reactive-programming#push-event-pull-data" target="_blank" rel="external">Agera Wiki 中文版</a>中有说到，这是因为:</p>
+<blockquote>
+<p>由于 <em>push event, pull data</em> 模型和多线程情况下，观察者可能看不到数据全部的更新记录。 这是特意设计的: 因为大多数情况下(尤其更新app UI), 本来就只需要关心最新的数据。</p>
+</blockquote>
+<p>上面的使用方法可以参考我的这个项目地址 <a href="https://github.com/EvilBT/AgeraBus" target="_blank" rel="external">AgeraBus</a>,里面有使用Demo。可以看下AgeraBus的具体实现，由于本人技术水平有限，如有Bug，欢迎讨论。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="http://zjutkz.net/2016/04/23/%E8%A6%81%E5%81%9A%E4%B8%80%E4%B8%AA%E6%9C%89%E5%86%92%E9%99%A9%E7%B2%BE%E7%A5%9E%E7%9A%84%E4%BA%BA%EF%BC%81%E5%BC%80%E5%90%AF%E6%BC%AB%E6%BC%AB%E7%9A%84agera%E4%B9%8B%E6%97%85/" target="_blank" rel="external">zjutkz的要做一个有冒险精神的人！开启漫漫的agera之旅</a></p>
+<p><a href="https://github.com/captain-miao/AndroidAgeraTutorial/wiki" target="_blank" rel="external">Agera Wiki 中文版</a></p>
+]]></content>
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+        <tags>
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            <tag> Android </tag>
             
-            首页
-          </a>
-        </li>
-      
+            <tag> Agera </tag>
+            
+            <tag> EventBus </tag>
+            
+        </tags>
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
+    </entry>
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://zpayh.xyz/2016/07/07/Dagger2使用详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sherlock">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.JPG">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Android">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Dagger2使用详解
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-07T00:49:54+08:00">
-                2016-07-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/07/07/Dagger2使用详解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/07/Dagger2使用详解/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="Dagger2-使用详解"><a href="#Dagger2-使用详解" class="headerlink" title="Dagger2 使用详解"></a>Dagger2 使用详解</h1><hr>
+    <entry>
+      <title><![CDATA[Dagger2使用详解]]></title>
+      <url>/2016/07/07/Dagger2%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<h1 id="Dagger2-使用详解"><a href="#Dagger2-使用详解" class="headerlink" title="Dagger2 使用详解"></a>Dagger2 使用详解</h1><hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Dagger2 是一款使用在Java和Android上的依赖注入的一个类库。<br><a id="more"></a></p>
 <h2 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h2><p>使用Android Studio 创建一个新的项目，在Project的 <code>build.gradle</code>文件添加以下内容：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">buildscript</span> &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">dependencies</span> &#123;</div><div class="line">        <span class="keyword">classpath</span> <span class="string">'me.tatarka:gradle-retrolambda:3.2.4'</span></div><div class="line">        <span class="keyword">classpath</span> <span class="string">'com.neenbedankt.gradle.plugins:android-apt:1.8'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>并在Module下的<code>build.gradle</code>添加以下内容:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'com.neenbedankt.android-apt'</span></div><div class="line">apply plugin: <span class="string">'me.tatarka.retrolambda'</span></div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileOptions &#123;</div><div class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    apt <span class="string">'com.google.dagger:dagger-compiler:2.4'</span></div><div class="line">    <span class="keyword">compile</span> <span class="string">'com.google.dagger:dagger:2.4'</span></div><div class="line">    provided <span class="string">'org.glassfish:javax.annotation:10.0-b28'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -401,386 +104,40 @@
 <h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>这篇是我参考了其他文章之后自己又重新总结一遍的，错误之处请帮忙指出，大家一起进步。除了以上常用到的注解之外，Dagger还提供了其他一些注解，如Set，Map类的注解，具体可以参考以下文章。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/luxiaoming/dagger2Demo" target="_blank" rel="external">Dagger2图文完全教程</a><br><a href="http://www.jianshu.com/p/01d3c014b0b1" target="_blank" rel="external">Google官方MVP+Dagger2架构详解【从零开始搭建android框架系列（6）】</a><br><a href="http://www.jianshu.com/p/cd2c1c9f68d4" target="_blank" rel="external">Android：dagger2让你爱不释手-基础依赖注入框架篇</a><br><a href="http://www.jianshu.com/p/1d42d2e6f4a5" target="_blank" rel="external">Android：dagger2让你爱不释手-重点概念讲解、融合篇</a><br><a href="http://www.jianshu.com/p/65737ac39c44" target="_blank" rel="external">Android：dagger2让你爱不释手-终结篇</a><br><a href="http://www.jianshu.com/p/8fd84680939c" target="_blank" rel="external">Android:Dagger2学习之由浅入深</a></p>
 <h3 id="Demo地址"><a href="#Demo地址" class="headerlink" title="Demo地址"></a>Demo地址</h3><p><a href="https://github.com/EvilBT/-Dagger2Demo" target="_blank" rel="external">https://github.com/EvilBT/-Dagger2Demo</a></p>
-
-      
-    </div>
-
-    <div>
+]]></content>
       
         
-
-      
-    </div>
-
-    <div>
-      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> Dagger2 </tag>
+            
+        </tags>
         
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
-            <a href="/tags/Dagger2/" rel="tag"># Dagger2</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/11/08/基于Agera的EventBus实现库/" rel="next" title="基于Agera的EventBus实现库">
-                <i class="fa fa-chevron-left"></i> 基于Agera的EventBus实现库
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/09/Android开发中使用lambda表达式/" rel="prev" title="Android开发中使用lambda表达式">
-                Android开发中使用lambda表达式 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+    </entry>
     
-      <div class="ds-thread" data-thread-key="2016/07/07/Dagger2使用详解/"
-           data-title="Dagger2使用详解" data-url="http://zpayh.xyz/2016/07/07/Dagger2使用详解/">
-      </div>
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
+    <entry>
+      <title><![CDATA[Android开发中使用lambda表达式]]></title>
+      <url>/2016/06/09/Android%E5%BC%80%E5%8F%91%E4%B8%AD%E4%BD%BF%E7%94%A8lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<p>在<strong>Project</strong>的<strong>build.gradle</strong>中添加：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">       <span class="keyword">classpath</span> <span class="string">'me.tatarka:gradle-retrolambda:3.2.5'</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>在<strong>Module</strong>的<strong>build.gradle</strong>中添加：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'me.tatarka.retrolambda'</span></div></pre></td></tr></table></figure></p>
+<p>并把jdk设置成1.8的：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    compileOptions &#123;</div><div class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>build</strong>更新一下,就可以在代码中使用 <strong>lambda</strong>语句了。</p>
+<h3 id="另外"><a href="#另外" class="headerlink" title="另外"></a>另外</h3><p>最新版本的Android Studio 2.1.1本身也支持<strong>lambda</strong>语句了，SDK全部更新到最新的，然后直接在<strong>Module</strong>的<strong>build.gradle</strong>添加以下内容：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultConfig &#123;</div><div class="line">        jackOptions &#123;</div><div class="line">            enabled <span class="keyword">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    compileOptions &#123;</div><div class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>开启<strong>jack</strong>功能，这样也可以使用<strong>lambda</strong>语句，而且这还是原生的，不过我在调试代码的时候，开启<strong>jack</strong>之后对我引入的其他<strong>Module</strong>的代码支持不是很好，调试的时候看不到其他<strong>Module</strong>引过来的类的实例的动态值，所以我还是暂时没用这个功能。</p>
+]]></content>
       
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.JPG"
-               alt="sherlock" />
-          <p class="site-author-name" itemprop="name">sherlock</p>
-           
-              <p class="site-description motion-element" itemprop="description">Android开发</p>
-          
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-
-          
+        
+        <tags>
             
+            <tag> Android </tag>
             
-            <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">标签</span>
-              
-            </div>
-          
-
-        </nav>
-
+        </tags>
         
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dagger2-使用详解"><span class="nav-number">1.</span> <span class="nav-text">Dagger2 使用详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置信息"><span class="nav-number">1.2.</span> <span class="nav-text">配置信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dagger2基本使用"><span class="nav-number">1.3.</span> <span class="nav-text">Dagger2基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Module"><span class="nav-number">1.3.1.</span> <span class="nav-text">@Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scope"><span class="nav-number">1.3.2.</span> <span class="nav-text">@Scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组织Component"><span class="nav-number">1.3.3.</span> <span class="nav-text">组织Component</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖方式"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">依赖方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#包含方式（从属方式）-SubComponent"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">包含方式（从属方式）@SubComponent</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Qualifier"><span class="nav-number">1.3.4.</span> <span class="nav-text">@Qualifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">1.3.5.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.3.6.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo地址"><span class="nav-number">1.3.7.</span> <span class="nav-text">Demo地址</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">sherlock</span>
-</div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-  
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-
-  
-  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-  
+    </entry>
     
   
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"zpayh"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
   
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
+</search>
