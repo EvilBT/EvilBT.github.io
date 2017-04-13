@@ -73,7 +73,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android," />
+  <meta name="keywords" content="Android,Agera,EventBus," />
 
 
 
@@ -89,17 +89,17 @@
 
 
 
-<meta name="description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;">
-<meta name="keywords" content="Android">
+<meta name="description" content="基于Agera的EventBus实现库2-添加多进程支持AgeraBus简介AgeraBus 是基于谷歌开源的Agera实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。">
+<meta name="keywords" content="Android,Agera,EventBus">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android开发中使用lambda表达式">
-<meta property="og:url" content="http://zpayh.xyz/2016/06/09/Android开发中使用lambda表达式/index.html">
+<meta property="og:title" content="基于Agera的EventBus实现库2-添加多进程支持Dagger2使用详解">
+<meta property="og:url" content="http://zpayh.xyz/2017/04/12/基于Agera的EventBus实现库2-添加多进程支持/index.html">
 <meta property="og:site_name" content="Android技术开发">
-<meta property="og:description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;">
-<meta property="og:updated_time" content="2016-07-06T17:03:16.336Z">
+<meta property="og:description" content="基于Agera的EventBus实现库2-添加多进程支持AgeraBus简介AgeraBus 是基于谷歌开源的Agera实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。">
+<meta property="og:updated_time" content="2017-04-12T11:59:25.748Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android开发中使用lambda表达式">
-<meta name="twitter:description" content="在Project的build.gradle中添加：123dependencies &amp;#123;       classpath &apos;me.tatarka:gradle-retrolambda:3.2.5&apos;   &amp;#125;">
+<meta name="twitter:title" content="基于Agera的EventBus实现库2-添加多进程支持Dagger2使用详解">
+<meta name="twitter:description" content="基于Agera的EventBus实现库2-添加多进程支持AgeraBus简介AgeraBus 是基于谷歌开源的Agera实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。">
 
 
 
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://zpayh.xyz/2016/06/09/Android开发中使用lambda表达式/"/>
+  <link rel="canonical" href="http://zpayh.xyz/2017/04/12/基于Agera的EventBus实现库2-添加多进程支持/"/>
 
 
 
 
 
-  <title> Android开发中使用lambda表达式 | Android技术开发 </title>
+  <title> 基于Agera的EventBus实现库2-添加多进程支持Dagger2使用详解 | Android技术开发 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -271,7 +271,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://zpayh.xyz/2016/06/09/Android开发中使用lambda表达式/">
+    <link itemprop="mainEntityOfPage" href="http://zpayh.xyz/2017/04/12/基于Agera的EventBus实现库2-添加多进程支持/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sherlock">
@@ -292,7 +292,7 @@
             
             
               
-                Android开发中使用lambda表达式
+                基于Agera的EventBus实现库2-添加多进程支持Dagger2使用详解
               
             
           </h1>
@@ -307,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-09T12:06:01+08:00">
-                2016-06-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-12T19:55:55+08:00">
+                2017-04-12
               </time>
             
 
@@ -326,7 +326,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2016/06/09/Android开发中使用lambda表达式/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/04/12/基于Agera的EventBus实现库2-添加多进程支持/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -335,7 +335,7 @@
 
           
           
-             <span id="/2016/06/09/Android开发中使用lambda表达式/" class="leancloud_visitors" data-flag-title="Android开发中使用lambda表达式">
+             <span id="/2017/04/12/基于Agera的EventBus实现库2-添加多进程支持/" class="leancloud_visitors" data-flag-title="基于Agera的EventBus实现库2-添加多进程支持Dagger2使用详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -364,13 +364,31 @@
       
 
       
-        <p>在<strong>Project</strong>的<strong>build.gradle</strong>中添加：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">       <span class="keyword">classpath</span> <span class="string">'me.tatarka:gradle-retrolambda:3.2.5'</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>在<strong>Module</strong>的<strong>build.gradle</strong>中添加：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'me.tatarka.retrolambda'</span></div></pre></td></tr></table></figure></p>
-<p>并把jdk设置成1.8的：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    compileOptions &#123;</div><div class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>build</strong>更新一下,就可以在代码中使用 <strong>lambda</strong>语句了。</p>
-<h3 id="另外"><a href="#另外" class="headerlink" title="另外"></a>另外</h3><p>最新版本的Android Studio 2.1.1本身也支持<strong>lambda</strong>语句了，SDK全部更新到最新的，然后直接在<strong>Module</strong>的<strong>build.gradle</strong>添加以下内容：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultConfig &#123;</div><div class="line">        jackOptions &#123;</div><div class="line">            enabled <span class="keyword">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    compileOptions &#123;</div><div class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>开启<strong>jack</strong>功能，这样也可以使用<strong>lambda</strong>语句，而且这还是原生的，不过我在调试代码的时候，开启<strong>jack</strong>之后对我引入的其他<strong>Module</strong>的代码支持不是很好，调试的时候看不到其他<strong>Module</strong>引过来的类的实例的动态值，所以我还是暂时没用这个功能。</p>
+        <h1 id="基于Agera的EventBus实现库2-添加多进程支持"><a href="#基于Agera的EventBus实现库2-添加多进程支持" class="headerlink" title="基于Agera的EventBus实现库2-添加多进程支持"></a>基于Agera的EventBus实现库2-添加多进程支持</h1><h2 id="AgeraBus简介"><a href="#AgeraBus简介" class="headerlink" title="AgeraBus简介"></a>AgeraBus简介</h2><p><a href="https://github.com/EvilBT/AgeraBus" target="_blank" rel="external">AgeraBus</a> 是基于谷歌开源的<a href="https://github.com/google/agera" target="_blank" rel="external">Agera</a>实现的Android事件总线，实现了EventBus基本常用的功能，下面将为你一一介绍，如果要了解Agera，可以去看我文章后面推荐的两个地址。<br><a id="more"></a></p>
+<h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>在项目根目录的build.gradle中添加:<br>在app的build.gradle中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile &apos;xyz.zpayh:agerabus:1.0.4&apos;</div><div class="line">    compile &apos;com.google.android.agera:agera:1.3.0&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h2><p>单进程下的基本使用方法可以参考我之前写的文章<br><a href="http://www.jianshu.com/p/003a23395426" target="_blank" rel="external">基于Agera的EventBus实现库</a>。</p>
+<h2 id="多进程支持"><a href="#多进程支持" class="headerlink" title="多进程支持"></a>多进程支持</h2><p>一般来讲，EventBus只支持单进程下传递事件的，因为使用多进程都会造成如下几个方面的问题：</p>
+<ul>
+<li>静态成员和单例模式完全失效。</li>
+<li>线程同步机制失效。</li>
+<li>Application会多次创建。</li>
+</ul>
+<p>造成上面问题的原因是因为不同进程间不共享内存，而Application是因为每个进程初始化过程都会创建新的Application。不同进程的组件会拥有独立的虚拟机、Application、以及内存空间，这就使得事件传递不了，使EventBus失效。</p>
+<p>AgeraBus 采用Messenger实现跨进程通信，相比于之前的使用方法有些许不一样：</p>
+<ul>
+<li>在自己的Application的onCreate中调用AgeraBus.init(Context)进行注册（由于Application在每个进程都会被创建，确保了每个进程都有向AgeraBus进行注册，如果不在Application进行注册的话，就在各个不同进程的组件第一次使用的时候进行注册也行）;</li>
+<li>跨进程传递的事件必须实现Serializable或者Parcelable接口（基本类型已经默认实现Serializable）。</li>
+<li>没了，其他使用方法跟<a href="http://www.jianshu.com/p/003a23395426" target="_blank" rel="external">基于Agera的EventBus实现库</a>一样。</li>
+</ul>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>多进程有些限制：</p>
+<ul>
+<li>没有实现Serializable或者Parcelable接口的事件是不会跨进程传递的。</li>
+<li>由于跨进程不能共享内存的，本质上事件在跨进程传递中已经不是同一个事件了，所以不同进程对事件内容进行修改，是不会对其他进程造成影响的，除非你重新发送新事件。</li>
+<li>取消事件的传递也只对当前进程有效，没法影响到其他进程。</li>
+</ul>
+<p>1.0.4版本中除了实现了IPC传递事件之外，也更新到Agera最新版本，还有就是取消事件传递必须在发送事件的线程中取消，否则是没有效果的，本来是想抛出运行时异常，想想还是算了。</p>
+<p>以上就是AgeraBus的最新版本的使用，具体使用方法可以看Github上的SampleDemo，下面放出链接，希望有在学习使用Agera的同学也能使用我的AgeraBus。</p>
+<p><a href="https://github.com/EvilBT/AgeraBus" target="_blank" rel="external">AgeraBus</a></p>
 
       
     </div>
@@ -418,6 +436,10 @@
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
+            <a href="/tags/Agera/" rel="tag"># Agera</a>
+          
+            <a href="/tags/EventBus/" rel="tag"># EventBus</a>
+          
         </div>
       
 
@@ -429,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/07/Dagger2使用详解/" rel="next" title="Dagger2使用详解">
-                <i class="fa fa-chevron-left"></i> Dagger2使用详解
+              <a href="/2017/04/12/如何优雅地实现Adapter多布局列表/" rel="next" title="如何优雅地实现Adapter多布局列表">
+                <i class="fa fa-chevron-left"></i> 如何优雅地实现Adapter多布局列表
               </a>
             
           </div>
@@ -438,6 +460,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/08/基于Agera的EventBus实现库/" rel="prev" title="基于Agera的EventBus实现库">
+                基于Agera的EventBus实现库 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -581,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#另外"><span class="nav-number">1.</span> <span class="nav-text">另外</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于Agera的EventBus实现库2-添加多进程支持"><span class="nav-number">1.</span> <span class="nav-text">基于Agera的EventBus实现库2-添加多进程支持</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AgeraBus简介"><span class="nav-number">1.1.</span> <span class="nav-text">AgeraBus简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加依赖"><span class="nav-number">1.2.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用方法"><span class="nav-number">1.3.</span> <span class="nav-text">基本使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程支持"><span class="nav-number">1.4.</span> <span class="nav-text">多进程支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">1.5.</span> <span class="nav-text">注意</span></a></li></ol></li></ol></div>
             
 
           </div>

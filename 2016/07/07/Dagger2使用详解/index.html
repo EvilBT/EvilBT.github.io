@@ -94,7 +94,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dagger2使用详解">
 <meta property="og:url" content="http://zpayh.xyz/2016/07/07/Dagger2使用详解/index.html">
-<meta property="og:site_name" content="Android">
+<meta property="og:site_name" content="Android技术开发">
 <meta property="og:description" content="Dagger2 使用详解 前言Dagger2 是一款使用在Java和Android上的依赖注入的一个类库。">
 <meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/001.png?imageMogr2/auto-orient/thumbnail/500x">
 <meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/002.png?imageMogr2/auto-orient/thumbnail/500x">
@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/005.png?imageMogr2/auto-orient/thumbnail/400x">
 <meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/008.png?imageMogr2/auto-orient/thumbnail/500x">
 <meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/009.png?imageMogr2/auto-orient/thumbnail/500x">
-<meta property="og:updated_time" content="2016-07-06T17:03:15.292Z">
+<meta property="og:updated_time" content="2017-04-12T11:52:15.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dagger2使用详解">
 <meta name="twitter:description" content="Dagger2 使用详解 前言Dagger2 是一款使用在Java和Android上的依赖注入的一个类库。">
@@ -143,7 +143,7 @@
 
 
 
-  <title> Dagger2使用详解 | Android </title>
+  <title> Dagger2使用详解 | Android技术开发 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -188,7 +188,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Android</span>
+        <span class="site-title">Android技术开发</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -242,6 +242,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
 
       
     </ul>
@@ -276,11 +286,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sherlock">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Android">
+      <meta itemprop="name" content="Android技术开发">
     </span>
 
     
@@ -326,14 +336,25 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/07/07/Dagger2使用详解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/07/Dagger2使用详解/" itemprop="commentCount"></span>
+                <a class="cloud-tie-join-count" href="/2016/07/07/Dagger2使用详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
             
           
 
           
+          
+             <span id="/2016/07/07/Dagger2使用详解/" class="leancloud_visitors" data-flag-title="Dagger2使用详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -355,8 +376,8 @@
       
         <h1 id="Dagger2-使用详解"><a href="#Dagger2-使用详解" class="headerlink" title="Dagger2 使用详解"></a>Dagger2 使用详解</h1><hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Dagger2 是一款使用在Java和Android上的依赖注入的一个类库。<br><a id="more"></a></p>
-<h2 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h2><p>使用Android Studio 创建一个新的项目，在Project的 <code>build.gradle</code>文件添加以下内容：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">buildscript</span> &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">dependencies</span> &#123;</div><div class="line">        <span class="keyword">classpath</span> <span class="string">'me.tatarka:gradle-retrolambda:3.2.4'</span></div><div class="line">        <span class="keyword">classpath</span> <span class="string">'com.neenbedankt.gradle.plugins:android-apt:1.8'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>并在Module下的<code>build.gradle</code>添加以下内容:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'com.neenbedankt.android-apt'</span></div><div class="line">apply plugin: <span class="string">'me.tatarka.retrolambda'</span></div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileOptions &#123;</div><div class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    apt <span class="string">'com.google.dagger:dagger-compiler:2.4'</span></div><div class="line">    <span class="keyword">compile</span> <span class="string">'com.google.dagger:dagger:2.4'</span></div><div class="line">    provided <span class="string">'org.glassfish:javax.annotation:10.0-b28'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h2><p>使用Android Studio 创建一个新的项目，在Project的 <code>build.gradle</code>文件添加以下内容：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">buildscript</span> &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">dependencies</span> &#123;</div><div class="line">        <span class="keyword">classpath</span> <span class="string">'me.tatarka:gradle-retrolambda:3.2.4'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>并在Module下的<code>build.gradle</code>添加以下内容:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'com.neenbedankt.android-apt'</span></div><div class="line">apply plugin: <span class="string">'me.tatarka.retrolambda'</span></div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileOptions &#123;</div><div class="line">        <span class="keyword">sourceCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">        <span class="keyword">targetCompatibility</span> JavaVersion.VERSION_1_8</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    annotationProcessor <span class="string">'com.google.dagger:dagger-compiler:2.4'</span></div><div class="line">    <span class="keyword">compile</span> <span class="string">'com.google.dagger:dagger:2.4'</span></div><div class="line">    provided <span class="string">'org.glassfish:javax.annotation:10.0-b28'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这样就基本完全了Dagger2的配置环境（顺便也配置了支持lambda表达式）。</p>
 <h2 id="Dagger2基本使用"><a href="#Dagger2基本使用" class="headerlink" title="Dagger2基本使用"></a>Dagger2基本使用</h2><p>我们先简单地创建一个类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Poetry</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String mPemo;</div><div class="line"></div><div class="line">    <span class="comment">// 用Inject标记构造函数,表示用它来注入到目标对象中去</span></div><div class="line">    <span class="meta">@Inject</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Poetry</span><span class="params">()</span> </span>&#123;</div><div class="line">        mPemo = <span class="string">"生活就像海洋"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPemo</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mPemo;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>然后我们在MainActivity中使用这个类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">//添加@Inject注解，表示这个mPoetry是需要注入的</span></div><div class="line">    <span class="meta">@Inject</span></div><div class="line">    Poetry mPoetry;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> TextView mTextView;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        initView();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initView</span><span class="params">()</span> </span>&#123;</div><div class="line">        mTextView = (TextView) findViewById(R.id.tv_poetry);</div><div class="line">        mTextView.setText(mPoetry.getPoems());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -415,6 +436,22 @@
     <div>
       
         
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wechat.JPG" alt="sherlock WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
 
       
     </div>
@@ -472,6 +509,12 @@
 
     <div class="post-spread">
       
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58ef0f1c62d33218" async = "async" ></script>
+</div>
+
+      
     </div>
   </div>
 
@@ -483,9 +526,7 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/07/07/Dagger2使用详解/"
-           data-title="Dagger2使用详解" data-url="http://zpayh.xyz/2016/07/07/Dagger2使用详解/">
-      </div>
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
     
   </div>
 
@@ -521,11 +562,11 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
+               src="/images/avatar.JPG"
                alt="sherlock" />
           <p class="site-author-name" itemprop="name">sherlock</p>
            
-              <p class="site-description motion-element" itemprop="description">Android开发</p>
+              <p class="site-description motion-element" itemprop="description">Android技术开发</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -533,7 +574,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -545,10 +586,10 @@
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">4</span>
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
-              
+              </a>
             </div>
           
 
@@ -557,6 +598,22 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/EvilBT" target="_blank" title="GitHub">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/8e523dd140ee" target="_blank" title="简书">
+                  
+                  简书
+                </a>
+              </span>
+            
           
         </div>
 
@@ -727,52 +784,154 @@
 
   
 
-  
-    
+
   
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"zpayh"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "2ee965855c634f4db245dc759543bfdf",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("hBi7yuTQ5rmfGcaRmE5YzC0d-gzGzoHsz", "AeRw71ec3sTXwvPC1RqxlP3H");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
   </script>
 
-  
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
 
   
 

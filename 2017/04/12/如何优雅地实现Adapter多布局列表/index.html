@@ -1,0 +1,904 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="Sql7G8CBDDUA6MI5Sf6f8oLIwUh453ZsVUddRNyMUXk" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,RecyclerView,Adapter," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="如何优雅地实现Adapter多布局列表前言现在在实际开发中，越来越多的人选择RecyclerView来实现列表布局，而RecyclerView写多了，每次都要直接继承Adapter实现onCreateViewHolder、onBindViewHolder、getItemCount这三个方法，虽然代码量不算很大，但每个XXXAdapter其实都长得差不多，这种重复性的代码，开发者是最不想写的了，所以">
+<meta name="keywords" content="Android,RecyclerView,Adapter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何优雅地实现Adapter多布局列表">
+<meta property="og:url" content="http://zpayh.xyz/2017/04/12/如何优雅地实现Adapter多布局列表/index.html">
+<meta property="og:site_name" content="Android技术开发">
+<meta property="og:description" content="如何优雅地实现Adapter多布局列表前言现在在实际开发中，越来越多的人选择RecyclerView来实现列表布局，而RecyclerView写多了，每次都要直接继承Adapter实现onCreateViewHolder、onBindViewHolder、getItemCount这三个方法，虽然代码量不算很大，但每个XXXAdapter其实都长得差不多，这种重复性的代码，开发者是最不想写的了，所以">
+<meta property="og:image" content="http://o9qzkbu2x.bkt.clouddn.com/mgrid.png?imageMogr2/auto-orient/thumbnail/450x">
+<meta property="og:updated_time" content="2017-04-13T05:50:35.068Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何优雅地实现Adapter多布局列表">
+<meta name="twitter:description" content="如何优雅地实现Adapter多布局列表前言现在在实际开发中，越来越多的人选择RecyclerView来实现列表布局，而RecyclerView写多了，每次都要直接继承Adapter实现onCreateViewHolder、onBindViewHolder、getItemCount这三个方法，虽然代码量不算很大，但每个XXXAdapter其实都长得差不多，这种重复性的代码，开发者是最不想写的了，所以">
+<meta name="twitter:image" content="http://o9qzkbu2x.bkt.clouddn.com/mgrid.png?imageMogr2/auto-orient/thumbnail/450x">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zpayh.xyz/2017/04/12/如何优雅地实现Adapter多布局列表/"/>
+
+
+
+
+
+  <title> 如何优雅地实现Adapter多布局列表 | Android技术开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-97205771-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Android技术开发</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zpayh.xyz/2017/04/12/如何优雅地实现Adapter多布局列表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sherlock">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术开发">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何优雅地实现Adapter多布局列表
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-12T20:00:54+08:00">
+                2017-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/04/12/如何优雅地实现Adapter多布局列表/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/12/如何优雅地实现Adapter多布局列表/" class="leancloud_visitors" data-flag-title="如何优雅地实现Adapter多布局列表">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="如何优雅地实现Adapter多布局列表"><a href="#如何优雅地实现Adapter多布局列表" class="headerlink" title="如何优雅地实现Adapter多布局列表"></a>如何优雅地实现Adapter多布局列表</h1><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>现在在实际开发中，越来越多的人选择RecyclerView来实现列表布局，而RecyclerView写多了，每次都要直接继承Adapter实现<code>onCreateViewHolder</code>、<code>onBindViewHolder</code>、<code>getItemCount</code>这三个方法，虽然代码量不算很大，但每个XXXAdapter其实都长得差不多，这种重复性的代码，开发者是最不想写的了，所以网上就出现了很多封装Adapter的开源库。所以本篇文章也介绍自己封装的一个Adapter，帮你快速高效的添加一个列表(包括单Item列表和多Item列表)。<br><a id="more"></a></p>
+<h3 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h3><p>先简单看一下最终效果:</p>
+<p><img src="http://o9qzkbu2x.bkt.clouddn.com/mgrid.png?imageMogr2/auto-orient/thumbnail/450x" alt="多Item列表"></p>
+<p>而Adapter的代码量极少，感受一下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMultiAdapter</span> <span class="keyword">extends</span> <span class="title">BaseMultiAdapter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bind</span><span class="params">(BaseViewHolder holder, <span class="keyword">int</span> layoutRes)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>嗯，没错，你只需要实现<code>bind</code>方法就可以了，而<code>bind</code>方法是用来设置<code>View</code>的一些一次性设置的，例如开启响应点击事件，长按事件等。所以上面我就什么都没写。</p>
+<h3 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h3><ul>
+<li>实现一个通用的<em>Adapter</em>模版，避免写<em>Adapter</em>中大量的重复代码，抽象出几个接口。</li>
+<li>通过让数据类实现<code>IMultiItem</code>接口，把部分<em>Adapter</em>中的代码转移到具体的数据类中，而不用在<em>Adapter</em>去判断数据类型和ViewType。这样很容易添加新的Item(ViewType)类型,减少耦合，<em>Adapter</em>不用去感知<code>IMultiItem</code>的具体类型。</li>
+<li>高内聚，低耦合，方便扩展。</li>
+<li>封装<code>ViewHolder</code>，将对View的常用操作都加上去。</li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们先看一下<code>BaseViewHolder</code>：<code>BaseViewHolder</code>封装了我们一些常用的操作，例如获取子View，设置item的点击事件，设置item的子<code>View</code>响应点击事件等。获取子<code>View</code>我用了<code>Object[]</code>数组进行缓存，没有用<code>SparseArray</code>来缓存View，主要是我之前看了Agera的源码，所以才用这种方式来缓存的，这里按下不表，下面是<code>BaseAdapter</code>的部分代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Object[] mIdsAndViews = <span class="keyword">new</span> Object[<span class="number">0</span>];</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 设置响应点击事件，如果设置了clickable为true的话，在&#123;<span class="doctag">@link</span> BaseAdapter#setOnItemClickListener(OnItemClickListener)&#125;</div><div class="line">     * 中会得到响应事件的回调,详情参考&#123;<span class="doctag">@link</span> BaseAdapter#setOnItemClickListener(OnItemClickListener)&#125;</div><div class="line">     * <span class="doctag">@param</span> id 响应点击事件的View Id</div><div class="line">     * <span class="doctag">@param</span> clickable true响应点击事件，false不响应点击事件</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> BaseViewHolder <span class="title">setClickable</span><span class="params">(@IdRes <span class="keyword">int</span> id, <span class="keyword">boolean</span> clickable)</span></span>&#123;</div><div class="line">        View view = find(id);</div><div class="line">        <span class="keyword">if</span> (view != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span> (clickable)&#123;</div><div class="line">                view.setOnClickListener(mOnClickListener);</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                view.setOnClickListener(<span class="keyword">null</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据当前id查找对应的View控件</div><div class="line">     * <span class="doctag">@param</span> viewId View id</div><div class="line">     * <span class="doctag">@param</span> &lt;T&gt; 子View的具体类型</div><div class="line">     * <span class="doctag">@return</span> 返回当前id对应的子View控件，如果没有，则返回null</div><div class="line">     */</div><div class="line">    <span class="meta">@CheckResult</span></div><div class="line">    <span class="keyword">public</span> &lt;T extends View&gt; <span class="function">T <span class="title">find</span><span class="params">(@IdRes <span class="keyword">int</span> viewId)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> indexToAdd = -<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mIdsAndViews.length; i+=<span class="number">2</span>) &#123;</div><div class="line">            Integer id = (Integer) mIdsAndViews[i];</div><div class="line">            <span class="keyword">if</span> (id != <span class="keyword">null</span> &amp;&amp; id == viewId)&#123;</div><div class="line">                <span class="keyword">return</span> (T) mIdsAndViews[i+<span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (id == <span class="keyword">null</span>)&#123;</div><div class="line">                indexToAdd = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (indexToAdd == -<span class="number">1</span>)&#123;</div><div class="line">            indexToAdd = mIdsAndViews.length;</div><div class="line">            mIdsAndViews = Arrays.copyOf(mIdsAndViews,</div><div class="line">                    indexToAdd &lt; <span class="number">2</span> ? <span class="number">2</span> : indexToAdd * <span class="number">2</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        mIdsAndViews[indexToAdd] = viewId;</div><div class="line">        mIdsAndViews[indexToAdd+<span class="number">1</span>] = itemView.findViewById(viewId);</div><div class="line">        <span class="keyword">return</span> (T) mIdsAndViews[indexToAdd+<span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来我们来看一下<code>BaseMultiAdapter</code>里面做了什么？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseMultiAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span>&lt;<span class="title">IMultiItem</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLayoutRes</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> IMultiItem data = mData.get(index);</div><div class="line">        <span class="keyword">return</span> data.getLayoutRes();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">convert</span><span class="params">(BaseViewHolder holder, IMultiItem data, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        data.convert(holder);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>是不是发现这里面也很少代码，因为很大一部分代码都在<code>BaseAdapter</code>中实现了，<br>这里我们发现了一个<code>IMultiItem</code>,我们看一下它俩的源代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IMultiItem</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 不同类型的item请使用不同的布局文件，</div><div class="line">     * 即使它们的布局是一样的，也要copy多一份出来。</div><div class="line">     * <span class="doctag">@return</span> 返回item对应的布局id</div><div class="line">     */</div><div class="line">    <span class="meta">@LayoutRes</span> <span class="function"><span class="keyword">int</span> <span class="title">getLayoutRes</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 进行数据处理，显示文本，图片等内容</div><div class="line">     * <span class="doctag">@param</span> holder Holder Helper</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">convert</span><span class="params">(BaseViewHolder holder)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 在布局为&#123;<span class="doctag">@link</span> android.support.v7.widget.GridLayoutManager&#125;时才有用处，</div><div class="line">     * 返回当前布局所占用的SpanSize</div><div class="line">     * <span class="doctag">@return</span> 如果返回的SpanSize &lt;= 0 或者 &gt; &#123;<span class="doctag">@link</span> GridLayoutManager#getSpanCount()&#125;</div><div class="line">     *  则&#123;<span class="doctag">@link</span> BaseAdapter&#125; 会在&#123;<span class="doctag">@link</span> BaseAdapter#onAttachedToRecyclerView(RecyclerView)&#125;</div><div class="line">     *  自适应为1或者&#123;<span class="doctag">@link</span> GridLayoutManager#getSpanCount()&#125;,详情参考&#123;<span class="doctag">@link</span> BaseAdapter#onAttachedToRecyclerView(RecyclerView)&#125;</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSpanSize</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseAdapter</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">BaseViewHolder</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> List&lt;T&gt; mData = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> BaseViewHolder.OnItemClickListener mOnItemClickListener;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> BaseViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> layoutRes)</span> </span>&#123;</div><div class="line">        BaseViewHolder baseViewHolder = <span class="keyword">new</span> BaseViewHolder(LayoutInflater.from(parent.getContext())</div><div class="line">                    .inflate(layoutRes, parent, <span class="keyword">false</span>));</div><div class="line">        bindData(baseViewHolder,layoutRes);</div><div class="line">        <span class="keyword">return</span> baseViewHolder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(BaseViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        <span class="comment">//数据布局</span></div><div class="line">        <span class="keyword">final</span> T data = mData.get(position);</div><div class="line">        convert(holder, data, position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mData.size();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> getLayoutRes(position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttachedToRecyclerView</span><span class="params">(RecyclerView recyclerView)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onAttachedToRecyclerView(recyclerView);</div><div class="line">        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();</div><div class="line">        <span class="keyword">if</span> (manager == <span class="keyword">null</span> || !(manager <span class="keyword">instanceof</span> GridLayoutManager)) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">final</span> GridLayoutManager gridLayoutManager = (GridLayoutManager) manager;</div><div class="line">        gridLayoutManager.setSpanSizeLookup(<span class="keyword">new</span> GridLayoutManager.SpanSizeLookup() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSpanSize</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">                <span class="keyword">final</span> T data = getData(position);</div><div class="line">                <span class="keyword">if</span> (data != <span class="keyword">null</span> &amp;&amp; data <span class="keyword">instanceof</span> IMultiItem)&#123;</div><div class="line">                    <span class="keyword">int</span> spanSize = ((IMultiItem)data).getSpanSize();</div><div class="line">                    <span class="keyword">return</span> spanSize &lt;= <span class="number">0</span> ? <span class="number">1</span> :</div><div class="line">                            spanSize &gt; gridLayoutManager.getSpanCount()?</div><div class="line">                            gridLayoutManager.getSpanCount():spanSize;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindData</span><span class="params">(BaseViewHolder baseViewHolder, <span class="keyword">int</span> layoutRes)</span> </span>&#123;</div><div class="line">        baseViewHolder.setOnItemClickListener(<span class="keyword">new</span> OnItemClickListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(@NonNull View view, <span class="keyword">int</span> adapterPosition)</span> </span>&#123;</div><div class="line">                <span class="keyword">if</span> (mOnItemClickListener != <span class="keyword">null</span>)&#123;</div><div class="line">                    mOnItemClickListener.onItemClick(view, adapterPosition);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">       </div><div class="line">        bind(baseViewHolder, layoutRes);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 返回布局layout</div><div class="line">     */</div><div class="line">    <span class="meta">@LayoutRes</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">getLayoutRes</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 在这里设置显示</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">convert</span><span class="params">(BaseViewHolder holder, T data, <span class="keyword">int</span> index)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 开启子view的点击事件，或者其他监听</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">bind</span><span class="params">(BaseViewHolder holder,<span class="keyword">int</span> layoutRes)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>看到这里我们就能发现了，BaseAdapter已经写了大部分的代码，就留下<code>getLayoutRes</code>,<code>convert</code>,<code>bind</code>给子类去实现，而它的子类<code>BaseMultiAdapter</code>直接把<code>getLayoutRes</code>和<code>convert</code>丢给了<code>IMultiItem</code>去实现。<br><code>getLayoutRes</code>是返回item对应的布局文件id，同时它在<code>BaseAdapter</code>也作为ViewType来使用，所以如果是不同类型的item,不建议共用同个布局文件。<br>所以，我们的数据类只要实现<code>IMultiItem</code>接口即可，例如上面的文本类item：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Text</span> <span class="keyword">implements</span> <span class="title">IMultiItem</span>, <span class="title">IFullSpan</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> String mText;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mSpanSize;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Text</span><span class="params">(String text,<span class="keyword">int</span> spanSize)</span> </span>&#123;</div><div class="line">        mText = text;</div><div class="line">        mSpanSize = spanSize;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLayoutRes</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> R.layout.item_text;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">convert</span><span class="params">(BaseViewHolder holder)</span> </span>&#123;</div><div class="line">        holder.setText(R.id.text,mText);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSpanSize</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mSpanSize;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFullSpan</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>把<code>getLayoutRes</code>跟<code>convert</code>交给<code>IMultiItem</code>处理的好处就是实现多布局列表变得很简单，数据各自对应自己的布局文件，自己在<code>convert</code>方法中显示数据。</p>
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><p>上面的具体全部代码在都在我的开源库里，一个封装了RecyclerView.Adapter一些常用功能的库:<a href="https://github.com/EvilBT/SherlockAdapter" target="_blank" rel="external">SherlockAdapter</a><br>文章写得有点简单了点，更好的学习方式是阅读源码，如果您喜欢的话，给我的github加个star吧，或者能提出建议更好。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wechat.JPG" alt="sherlock WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/RecyclerView/" rel="tag"># RecyclerView</a>
+          
+            <a href="/tags/Adapter/" rel="tag"># Adapter</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/12/基于Agera的EventBus实现库2-添加多进程支持/" rel="prev" title="基于Agera的EventBus实现库2-添加多进程支持Dagger2使用详解">
+                基于Agera的EventBus实现库2-添加多进程支持Dagger2使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58ef0f1c62d33218" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.JPG"
+               alt="sherlock" />
+          <p class="site-author-name" itemprop="name">sherlock</p>
+           
+              <p class="site-description motion-element" itemprop="description">Android技术开发</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/EvilBT" target="_blank" title="GitHub">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/8e523dd140ee" target="_blank" title="简书">
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何优雅地实现Adapter多布局列表"><span class="nav-number">1.</span> <span class="nav-text">如何优雅地实现Adapter多布局列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.0.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预览"><span class="nav-number">1.0.2.</span> <span class="nav-text">预览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总体思路"><span class="nav-number">1.0.3.</span> <span class="nav-text">总体思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.0.4.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码"><span class="nav-number">1.0.5.</span> <span class="nav-text">源码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sherlock</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "2ee965855c634f4db245dc759543bfdf",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("hBi7yuTQ5rmfGcaRmE5YzC0d-gzGzoHsz", "AeRw71ec3sTXwvPC1RqxlP3H");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
